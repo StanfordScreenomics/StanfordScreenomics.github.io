@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stanford Screenomics - Publications</title>
+  <style>
+    /* Reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: "Montserrat", "Open Sans", "Lato", "Helvetica Neue", Arial, sans-serif;
+      color: #111;
+      background: #fff;
+    }
+
+    /* Navbar */
+    header {
+      background: #fff;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    
+.logo {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #8C1515;
+  gap: 0.5rem; /* space between image and text */
+}
+
+.logo-img {
+  width: 40px;  /* adjust size as needed */
+  height: 40px;
+  object-fit: contain;
+}
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+      position: relative;
+    }
+
+    nav ul li { position: relative; }
+
+    nav ul li a {
+      text-decoration: none;
+      color: #111;
+      font-weight: 500;
+      padding: 0.5rem;
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover { color: #8C1515; }
+
+    nav ul li ul {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #fff;
+      border: 1px solid #8C1515;
+      border-radius: 5px;
+      list-style: none;
+      min-width: 150px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    nav ul li:hover ul { display: block; }
+
+    nav ul li ul li a {
+      display: block;
+      padding: 0.5rem 1rem;
+      color: #111;
+    }
+
+    nav ul li ul li a:hover {
+      background: #8C1515;
+      color: #fff;
+    }
+
+    /* Publications Section */
+    .publications {
+      padding: 4rem 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .publications h2 {
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #8C1515;
+    }
+
+    .publication-item {
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+      font-size: 1rem;
+      color: #333;
+    }
+
+    .publication-item a {
+      color: #8C1515;
+      text-decoration: none;
+    }
+
+    .publication-item a:hover {
+      text-decoration: underline;
+    }
+
+    /* Footer */
+    footer {
+      background: #111;
+      color: white;
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .publications h2 { font-size: 2rem; }
+      .publications { padding: 2rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header>
+    <div class="logo">
+  <img src="assets/logo.png" alt="Logo" class="logo-img">
+  Stanford Screenomics
+</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li>
+          <a href="#">Resources ▾</a>
+          <ul>
+            <li>
+              <a href="https://github.com/iansulin/Stanford_Screenomics/tree/main" target="_blank" style="display:inline-flex; align-items:center; gap:0.25rem; white-space:nowrap;">
+                Documentation
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M10 2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0V3.707L5.854 10.354a.5.5 0 1 1-.708-.708L12.293 3H10.5a.5.5 0 0 1-.5-.5z"/>
+                  <path fill-rule="evenodd" d="M13 13H3V3h5a.5.5 0 0 1 0 1H4v9h9v-4a.5.5 0 0 1 1 0v5a.5.5 0 0 1-.5.5z"/>
+                </svg>
+              </a>
+            </li>
+            <li><a href="publication.html" class="active">Publication</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">Framework ▾</a>
+          <ul>
+            <li><a href="features.html">Features</a></li>
+            <li>
+                <a href="simulator.html" target="_blank" rel="noopener noreferrer">
+                    Simulator
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M10 2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0V3.707L5.854 10.354a.5.5 0 1 1-.708-.708L12.293 3H10.5a.5.5 0 0 1-.5-.5z"/>
+                        <path fill-rule="evenodd" d="M13 13H3V3h5a.5.5 0 0 1 0 1H4v9h9v-4a.5.5 0 0 1 1 0v5a.5.5 0 0 1-.5.5z"/>
+                    </svg>
+                </a>
+            </li>
+          </ul>
+        </li>
+        <li><a href="team.html">Our Team</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Publications Section -->
+  <section class="publications">
+    <h2>Publications</h2>
+
+    <div class="publication-item">
+        Kim, I., Boffa, J., Cho, M., Conroy, D. E., Kline, N., Haber, N., Robinson, T. N., Reeves, B., & Ram, N. (2025). 
+        <strong>Stanford Screenomics: An Open-source Platform for Unobtrusive Multimodal Digital Trace Data Collection from Android Smartphones.</strong> Preprint MedRxiv.
+        <a href="https://doi.org/10.1101/2025.06.24.25329707" target="_blank">DOI</a>
+    </div>
+
+    <div class="publication-item">
+        Kim, I., Robinson, T., Reeves, B., Haber, N., & Ram, N. (2025). 
+        <strong>Multimodal Data Fusion for Real-Time Mobile Digital Phenotyping: The Stanford Screenomics Solution.</strong> 
+        Presented at the SAA 2025 Annual Meeting. 
+        <a href="https://www.saa2025.com/Program" target="_blank">Link</a>
+    </div>
+
+    <div class="publication-item">
+        Kim, I., Boffa, J., Cho, M., Conroy, D. E., Kline, N., Haber, N., Robinson, T. N., Reeves, B., & Ram, N. (2024). 
+        <strong>Stanford Screenomics: An open-source platform for unobtrusive multimodal digital trace data collection from Android smartphones.</strong> 
+        Presented at the APHA 2024 Annual Meeting. 
+        <a href="https://apha.confex.com/apha/2024/meetingapp.cgi/Paper/561893" target="_blank">Link</a>
+    </div>
+
+    </section>
+
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2024 Stanford Screenomics. All rights reserved.
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stanford Screenomics</title>
+  <style>
+    /* Reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: "Montserrat", "Open Sans", "Lato", "Helvetica Neue", Arial, sans-serif;
+      color: #111;
+      background: #fff;
+    }
+
+    /* Navbar */
+    header {
+      background: #fff;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #8C1515;
+  gap: 0.5rem; /* space between image and text */
+}
+
+.logo-img {
+  width: 40px;  /* adjust size as needed */
+  height: 40px;
+  object-fit: contain;
+}
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+      position: relative;
+    }
+
+    nav ul li { position: relative; }
+
+    nav ul li a {
+      text-decoration: none;
+      color: #111;
+      font-weight: 500;
+      padding: 0.5rem;
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover { color: #8C1515; }
+
+    nav ul li ul {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #fff;
+      border: 1px solid #8C1515;
+      border-radius: 5px;
+      list-style: none;
+      min-width: 150px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    nav ul li:hover ul { display: block; }
+
+    nav ul li ul li a {
+      display: block;
+      padding: 0.5rem 1rem;
+      color: #111;
+    }
+
+    nav ul li ul li a:hover {
+      background: #8C1515;
+      color: #fff;
+    }
+
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      width: 100%;
+      min-height: 60vh;
+      background: url('assets/digital-trace1.jpeg') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 8rem 4rem;
+      color: white;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.3);
+      z-index: 0;
+    }
+
+    .hero-content { position: relative; z-index: 1; max-width: 800px; }
+
+    .hero h1 { font-size: 3.5rem; margin-bottom: 2rem; color: #ffffff; }
+
+    .hero p { font-size: 1.2rem; margin-bottom: 3rem; max-width: 600px; }
+
+    .hero button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #8C1515;
+      color: #fff;
+      border: none;
+      padding: 1rem 2.5rem;
+      border-radius: 9999px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .hero button:hover { background: #a41b1b; }
+
+    /* Feature Cards Section */
+    .features { padding: 4rem 2rem; background: #f9f9f9; }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+
+    .feature-card.full-width { grid-column: 1 / -1; }
+
+    .feature-card {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .feature-card h3 { color: #8C1515; margin-bottom: 1rem; font-size: 1.5rem; }
+
+    .feature-card p { font-size: 1rem; line-height: 1.6; color: #333; }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+/* Collaborators Section */
+.collaborators {
+  padding: 4rem 2rem;
+  background: #fff;
+  text-align: center;
+}
+
+.collaborators h2 {
+  font-size: 2.5rem;
+  color: #8C1515;
+  margin-bottom: 3rem;
+}
+
+.collaborator-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.collab-card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  padding: 1.5rem;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  aspect-ratio: 4 / 3; /* keeps consistent rectangular boxes */
+  transition: transform 0.3s, box-shadow 0.3s, filter 0.3s;
+  filter: grayscale(100%);
+}
+
+.collab-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  filter: grayscale(0%);
+}
+
+.collab-card img {
+  max-width: 90%;
+  max-height: 90%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .collaborators h2 { font-size: 2rem; }
+  .collab-card img { height: 60px; }
+}
+
+
+    /* Contact Section Styles */
+    .contact {
+      background: #8C1515;
+      color: white;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+
+    .contact h2 { font-size: 2.5rem; margin-bottom: 3rem; }
+
+    .contact-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .contact-card {
+      background: white;
+      color: #111;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .contact-card h3 { color: #8C1515; margin-bottom: 1rem; font-size: 1.5rem; }
+
+    .contact-card p { font-size: 1rem; line-height: 1.6; margin-bottom: 1.5rem; }
+
+    .contact-card h4 { font-size: 1.25rem; color: #8C1515; margin: 0; }
+
+    /* Divider */
+    .divider { border: none; height: 1px; background: #ddd; margin: 1rem 0; }
+
+    /* Back to Top Button */
+    #backToTop {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      padding: 0.75rem 1rem;
+      background: #8C1515;
+      color: white;
+      border: none;
+      border-radius: 9999px;
+      cursor: pointer;
+      display: none;
+      z-index: 1000;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      nav ul { gap: 1rem; }
+      .hero h1 { font-size: 2rem; }
+      .hero { padding: 6rem 2rem; }
+      .container { grid-template-columns: 1fr; }
+      .contact-container { grid-template-columns: 1fr; }
+      .contact h2 { font-size: 2rem; }
+    }
+
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header>
+    <div class="logo">
+  <img src="assets/logo.png" alt="Logo" class="logo-img">
+  Stanford Screenomics
+</div>
+
+    <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li>
+          <a href="#">Resources ▾</a>
+          <ul>
+            <li>
+                <a href="https://github.com/iansulin/Stanford_Screenomics/tree/main" target="_blank" style="display: inline-flex; align-items: center; gap: 0.25rem; white-space: nowrap;">
+                    Documentation
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M10 2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0V3.707L5.854 10.354a.5.5 0 1 1-.708-.708L12.293 3H10.5a.5.5 0 0 1-.5-.5z"/>
+                    <path fill-rule="evenodd" d="M13 13H3V3h5a.5.5 0 0 1 0 1H4v9h9v-4a.5.5 0 0 1 1 0v5a.5.5 0 0 1-.5.5z"/>
+                    </svg>
+                </a>
+                </li>
+
+            <li><a href="publication.html">Publication</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">Framework ▾</a>
+          <ul>
+            <li><a href="features.html">Features</a></li>
+            <li>
+                <a href="simulator.html" target="_blank" rel="noopener noreferrer">
+                    Simulator
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M10 2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0V3.707L5.854 10.354a.5.5 0 1 1-.708-.708L12.293 3H10.5a.5.5 0 0 1-.5-.5z"/>
+                        <path fill-rule="evenodd" d="M13 13H3V3h5a.5.5 0 0 1 0 1H4v9h9v-4a.5.5 0 0 1 1 0v5a.5.5 0 0 1-.5.5z"/>
+                    </svg>
+                </a>
+            </li>
+          </ul>
+        </li>
+        <li><a href="team.html">Our Team</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h1>Stanford Screenomics</h1>
+      <p>A powerful platform providing frameworks, tools, and infrastructure to capture and analyze smartphone-based digital trace data.</p>
+      <button onclick="window.open('https://github.com/iansulin/Stanford_Screenomics/blob/main/README.md', '_blank')">
+    Get Started
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M10 2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0V3.707L5.854 10.354a.5.5 0 1 1-.708-.708L12.293 3H10.5a.5.5 0 0 1-.5-.5z"/>
+      <path fill-rule="evenodd" d="M13 13H3V3h5a.5.5 0 0 1 0 1H4v9h9v-4a.5.5 0 0 1 1 0v5a.5.5 0 0 1-.5.5z"/>
+    </svg>
+</button>
+
+    </div>
+  </section>
+
+  <!-- Feature Cards Section -->
+  <section class="features">
+    <div class="container">
+      <div class="feature-card full-width">
+        <h3>Why Screenomics?</h3>
+        <p>We are redefining how human behavior, attention, and well-being are studied in the digital age. Smartphones are ubiquitous, with individuals of all ages all over the world using them to do a wider variety of tasks. The merging of digital life into daily life opens new opportunities to study an increasingly wide array of human behaviors. By capturing real-time data from personal devices, the Screenomics platform provides a direct, dynamic view into how people think, feel, act, and interact as they go about their daily lives. Our platform empowers open, human-centered research that advances knowledge of and our ability to improve the human experience.</p>
+      </div>
+
+      <div class="feature-card">
+        <h3>What We Offer</h3>
+        <p>Screenomics is an open-source, privacy-aware platform for collecting high-resolution digital life data from study participants’ Android smartphones. The platform captures moment-by-moment screenshots alongside complementary signals such as location, physical activity, screentime, and user-device interactions. These data are transformed into structured, research-ready traces that enable researchers to unobtrusively observe real-world behavior as it naturally unfolds across apps, platforms, and daily contexts, without relying on self-reports or artificial lab settings.</p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Built for Open Science</h3>
+        <p>Screenomics is designed to advance open, transparent, and reproducible research. The platform is modular, easily customizable (even without coding experience), and extensible. The flexible design supports a wide range of study designs across disciplines. We foster collaboration through shared infrastructure, community-driven development, and open tools that accelerate discovery in behavioral and psychological science, mental and physical health, education, and digital media. Ethical data collection and strong privacy protections are central to the Screenomics approach.</p>
+      </div>
+
+      <div class="feature-card">
+        <h3>For Researchers and Developers</h3>
+        <p>From digital health to media studies, Screenomics flexibly adapts to diverse research goals. We provide researcher/developer-friendly, customizable processing pipelines and comprehensive documentation to support studies of all scales and complexities. We also partner directly with researchers to develop new features, support integration, and share best practices.</p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Scalable, Inclusive, Real-World Research</h3>
+        <p>Our approach enables science that reflects the real diversity of people’s lives—across geographies, cultures, languages, and digital habits. By passively capturing screen and device data in situ, Screenomics expands opportunity for researchers to obtain ecologically valid, individual- and population-representative, and socially impactful data that informs knowledge and improvement of human experience.</p>
+      </div>
+    </div>
+  </section>
+
+<!-- Collaborators Section -->
+<section class="collaborators" id="collaborators">
+  <h2>Collaborators</h2>
+  <div class="collaborator-container">
+    <!-- Academia Sinica -->
+    <a href="https://www.sinica.edu.tw/" target="_blank" rel="noopener noreferrer" class="collab-card">
+      <img src="assets/academia-sinica.png" alt="Academia Sinica">
+    </a>
+    <!-- University of Minnesota -->
+    <a href="https://twin-cities.umn.edu/" target="_blank" rel="noopener noreferrer" class="collab-card">
+      <img src="assets/u-minnesota.png" alt="University of Minnesota">
+    </a>
+    <!-- University of Wisconsin -->
+    <a href="https://www.wisc.edu/" target="_blank" rel="noopener noreferrer" class="collab-card">
+      <img src="assets/u-wisconsin.png" alt="University of Wisconsin">
+    </a>
+    <!-- University of Michigan -->
+    <a href="https://umich.edu/" target="_blank" rel="noopener noreferrer" class="collab-card">
+      <img src="assets/u-michigan.png" alt="University of Michigan">
+    </a>
+  </div>
+</section>
+
+
+  <!-- Contact Section -->
+  <section class="contact" id="contact">
+    <h2>Connect with Us</h2>
+    <div class="contact-container">
+      <!-- Discussion Forum -->
+      <div class="contact-card">
+        <div style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;"
+             onclick="window.open('https://github.com/iansulin/Stanford_Screenomics/discussions','_blank')">
+          <div style="width: 2.5rem; height: 2.5rem; background:#8C1515; border-radius:50%; display:flex; align-items:center; justify-content:center;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 2H4C2.895 2 2 2.895 2 4V18C2 19.105 2.895 20 4 20H18L22 24V4C22 2.895 21.105 2 20 2Z"/>
+            </svg>
+          </div>
+          <h3 style="margin:0; font-size:1.25rem; color:#8C1515;">Discussion Forum</h3>
+        </div>
+        <p style="margin-top:0.5rem; text-align:left; margin-left:2.75rem;">
+          Have a question or want to contribute? Visit our Discussion Forum to submit inquiries, propose features, report bugs, or share modules.
+        </p>
+      </div>
+
+      <!-- Email & Address -->
+      <div class="contact-card">
+        <!-- Email -->
+        <div style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;"
+             onclick="window.location.href='mailto:iank@stanford.edu'">
+          <div style="width: 2.5rem; height: 2.5rem; background:#8C1515; border-radius:50%; display:flex; align-items:center; justify-content:center;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 4H4C2.895 4 2 4.895 2 6V18C2 19.105 2.895 20 4 20H20C21.105 20 22 19.105 22 18V6C22 4.895 21.105 4 20 4ZM20 6L12 13L4 6"/>
+            </svg>
+          </div>
+          <h4>iank@stanford.edu</h4>
+        </div>
+
+        <!-- Divider -->
+        <hr class="divider">
+
+        <!-- Address -->
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-top:1rem; cursor: pointer;"
+             onclick="window.open('https://goo.gl/maps/your-map-link','_blank')">
+          <div style="width: 2.5rem; height: 2.5rem; background:#8C1515; border-radius:50%; display:flex; align-items:center; justify-content:center;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2C8 2 5 5 5 9C5 13 12 22 12 22C12 22 19 13 19 9C19 5 16 2 12 2Z"/>
+              <circle cx="12" cy="9" r="2" fill="white"/>
+            </svg>
+          </div>
+          <p style="margin:0; font-weight:bold; text-align:left;">450 Jane Stanford Way, Bldg. 420<br>Stanford, CA 94305-2048</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Back to Top Button -->
+  <button id="backToTop">Top ▲</button>
+
+  <script>
+    // Back to Top functionality
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      backToTop.style.display = window.scrollY > 300 ? 'block' : 'none';
+    });
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+
+  <!-- Footer -->
+  <footer style="background: #111; color: white; text-align: center; padding: 2rem 1rem; font-size: 0.9rem;">
+    &copy; 2024 Stanford Screenomics. All rights reserved.
+  </footer>
+
+</body>
+</html>

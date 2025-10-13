@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stanford Screenomics - Our Team</title>
+  <style>
+    /* Reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: "Montserrat", "Open Sans", "Lato", "Helvetica Neue", Arial, sans-serif;
+      color: #111;
+      background: #fff;
+    }
+
+    /* Navbar */
+    header {
+      background: #fff;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    
+.logo {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #8C1515;
+  gap: 0.5rem; /* space between image and text */
+}
+
+.logo-img {
+  width: 40px;  /* adjust size as needed */
+  height: 40px;
+  object-fit: contain;
+}
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+      position: relative;
+    }
+
+    nav ul li { position: relative; }
+
+    nav ul li a {
+      text-decoration: none;
+      color: #111;
+      font-weight: 500;
+      padding: 0.5rem;
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover { color: #8C1515; }
+
+    nav ul li ul {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #fff;
+      border: 1px solid #8C1515;
+      border-radius: 5px;
+      list-style: none;
+      min-width: 150px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    nav ul li:hover ul { display: block; }
+
+    nav ul li ul li a {
+      display: block;
+      padding: 0.5rem 1rem;
+      color: #111;
+    }
+
+    nav ul li ul li a:hover {
+      background: #8C1515;
+      color: #fff;
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      width: 100%;
+      min-height: 50vh;
+      background: url('assets/digital-trace1.jpeg') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 6rem 4rem;
+      color: white;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.3);
+      z-index: 0;
+    }
+
+    .hero-content { position: relative; z-index: 1; max-width: 800px; }
+    .hero h1 { font-size: 3rem; margin-bottom: 1rem; color: #ffffff; }
+    .hero p { font-size: 1.2rem; max-width: 600px; }
+
+    /* Team Section */
+    .team {
+      padding: 4rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .team h2 { font-size: 2.5rem; text-align: center; margin-bottom: 3rem; color: #8C1515; }
+
+    .team-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .team-member {
+      background: #fff;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .team-member:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    .team-member img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+    }
+
+    .team-member h3 { color: #8C1515; margin-bottom: 0.5rem; font-size: 1.25rem; font-weight: 500; }
+    .team-member p { font-size: 1rem; color: #333; }
+
+    /* Footer */
+    footer {
+      background: #111;
+      color: white;
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2rem; }
+      .hero { padding: 4rem 2rem; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header>
+    <div class="logo">
+  <img src="assets/logo.png" alt="Logo" class="logo-img">
+  Stanford Screenomics
+</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li>
+          <a href="#">Resources ▾</a>
+          <ul>
+            <li>
+              <a href="https://github.com/iansulin/Stanford_Screenomics/tree/main" target="_blank" style="display:inline-flex; align-items:center; gap:0.25rem; white-space:nowrap;">
+                Documentation
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M10 2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0V3.707L5.854 10.354a.5.5 0 1 1-.708-.708L12.293 3H10.5a.5.5 0 0 1-.5-.5z"/>
+                  <path fill-rule="evenodd" d="M13 13H3V3h5a.5.5 0 0 1 0 1H4v9h9v-4a.5.5 0 0 1 1 0v5a.5.5 0 0 1-.5.5z"/>
+                </svg>
+              </a>
+            </li>
+            <li><a href="publication.html">Publication</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">Framework ▾</a>
+          <ul>
+            <li><a href="features.html">Features</a></li>
+            <li>
+                <a href="simulator.html" target="_blank" rel="noopener noreferrer">
+                    Simulator
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M10 2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0V3.707L5.854 10.354a.5.5 0 1 1-.708-.708L12.293 3H10.5a.5.5 0 0 1-.5-.5z"/>
+                        <path fill-rule="evenodd" d="M13 13H3V3h5a.5.5 0 0 1 0 1H4v9h9v-4a.5.5 0 0 1 1 0v5a.5.5 0 0 1-.5.5z"/>
+                    </svg>
+                </a>
+            </li>
+          </ul>
+        </li>
+        <li><a href="team.html" class="active">Our Team</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Team Section -->
+  <section class="team" id="team">
+    <h2>Our Team</h2>
+    <p style="text-align:center; font-size:1.5rem; margin-bottom:2rem; color:#888; font-weight:bold;">
+      Meet the team behind Stanford Screenomics
+    </p>
+
+    <div class="team-container">
+      <!-- Team Members -->
+      <div class="team-member">
+        <img src="assets/tnr.jpg" alt="Thomas N. Robinson">
+        <h3>Thomas N. Robinson, MD, MPH</h3>
+        <p>Professor</p>
+        <p>Departments of Medicine and Pediatrics</p>
+      </div>
+
+      <div class="team-member">
+        <img src="assets/br.jpg" alt="Byron Reeves">
+        <h3>Byron Reeves, PhD</h3>
+        <p>Professor</p>
+        <p>Department of Communication</p>
+      </div>
+
+      <div class="team-member">
+        <img src="assets/nr.jpg" alt="Nilam Ram">
+        <h3>Nilam Ram, PhD</h3>
+        <p>Professor</p>
+        <p>Departments of Communication and Psychology</p>
+      </div>
+
+      <div class="team-member">
+        <img src="assets/nh.jpg" alt="Nick Haber">
+        <h3>Nicholas Haber, PhD</h3>
+        <p>Assistant Professor</p>
+        <p>Graduate School of Education</p>
+      </div>
+
+      <div class="team-member">
+        <img src="assets/unknown.jpg" alt="A Garron Torres">
+        <h3>A Garron Torres, BS</h3>
+        <p>Project Manager</p>
+      </div>
+
+      <div class="team-member">
+        <img src="assets/nk.jpg" alt="Nathan Kline">
+        <h3>Nathan Kline, BS</h3>
+        <p>Research Coordinator</p>
+      </div>
+
+      <div class="team-member">
+        <img src="assets/ik.jpg" alt="Ian Kim">
+        <h3>Ian Kim, PhD</h3>
+        <p>Postdoctoral Fellow</p>
+        <p>Departments of Psychology and Pediatrics</p>
+      </div>
+
+      <div class="team-member">
+        <img src="assets/yc.jpg" alt="Yikun Chi">
+        <h3>Yikun Chi, MS</h3>
+        <p>PhD Student in Communication</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2024 Stanford Screenomics. All rights reserved.
+  </footer>
+
+</body>
+</html>

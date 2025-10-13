@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stanford Screenomics - Features</title>
+  <style>
+    /* Reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: "Montserrat", "Open Sans", "Lato", "Helvetica Neue", Arial, sans-serif;
+      color: #111;
+      background: #fff;
+    }
+
+    /* Navbar */
+    header {
+      background: #fff;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    
+.logo {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #8C1515;
+  gap: 0.5rem; /* space between image and text */
+}
+
+.logo-img {
+  width: 40px;  /* adjust size as needed */
+  height: 40px;
+  object-fit: contain;
+}
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+      position: relative;
+    }
+
+    nav ul li { position: relative; }
+
+    nav ul li a {
+      text-decoration: none;
+      color: #111;
+      font-weight: 500;
+      padding: 0.5rem;
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover { color: #8C1515; }
+
+    nav ul li ul {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #fff;
+      border: 1px solid #8C1515;
+      border-radius: 5px;
+      list-style: none;
+      min-width: 150px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    nav ul li:hover ul { display: block; }
+
+    nav ul li ul li a {
+      display: block;
+      padding: 0.5rem 1rem;
+      color: #111;
+    }
+
+    nav ul li ul li a:hover {
+      background: #8C1515;
+      color: #fff;
+    }
+
+    /* Features Section */
+    .features {
+      padding: 4rem 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .features h2 {
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #8C1515;
+    }
+
+    /* Accordion */
+    .accordion {
+      background-color: #f9f9f9;
+      color: #8C1515;
+      cursor: pointer;
+      padding: 1rem;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 1.1rem;
+      font-weight: bold;
+      transition: background-color 0.3s;
+      border-bottom: 1px solid #ddd;
+      margin-top: 0.5rem;
+    }
+
+    .accordion:hover {
+      background-color: #f1f1f1;
+    }
+
+    .panel {
+      padding: 1rem;
+      display: none;
+      overflow: hidden;
+      background: #fff;
+      line-height: 1.6;
+    }
+
+    .panel h4 {
+      margin-top: 1rem;
+      color: #8C1515;
+    }
+
+    /* Footer */
+    footer {
+      background: #111;
+      color: white;
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .features h2 { font-size: 2rem; }
+      .features { padding: 2rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header>
+    <div class="logo">
+  <img src="assets/logo.png" alt="Logo" class="logo-img">
+  Stanford Screenomics
+</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li>
+          <a href="#">Resources ▾</a>
+          <ul>
+            <li>
+              <a href="https://github.com/iansulin/Stanford_Screenomics/tree/main" target="_blank" style="display:inline-flex; align-items:center; gap:0.25rem; white-space:nowrap;">
+                Documentation
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M10 2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0V3.707L5.854 10.354a.5.5 0 1 1-.708-.708L12.293 3H10.5a.5.5 0 0 1-.5-.5z"/>
+                  <path fill-rule="evenodd" d="M13 13H3V3h5a.5.5 0 0 1 0 1H4v9h9v-4a.5.5 0 0 1 1 0v5a.5.5 0 0 1-.5.5z"/>
+                </svg>
+              </a>
+            </li>
+            <li><a href="publication.html" class="active">Publication</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">Framework ▾</a>
+          <ul>
+            <li><a href="features.html" class="active">Features</a></li>
+            <li>
+                <a href="simulator.html" target="_blank" rel="noopener noreferrer">
+                    Simulator
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M10 2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0V3.707L5.854 10.354a.5.5 0 1 1-.708-.708L12.293 3H10.5a.5.5 0 0 1-.5-.5z"/>
+                        <path fill-rule="evenodd" d="M13 13H3V3h5a.5.5 0 0 1 0 1H4v9h9v-4a.5.5 0 0 1 1 0v5a.5.5 0 0 1-.5.5z"/>
+                    </svg>
+                </a>
+            </li>
+          </ul>
+        </li>
+        <li><a href="team.html">Our Team</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Features Section -->
+  <section class="features">
+    <h2>Stanford Screenomics Features</h2>
+
+    <button class="accordion">Overview</button>
+    <div class="panel">
+      <p>The Stanford Screenomics platform is an open-source, customizable framework designed for unobtrusive multimodal data collection from smartphones. It captures a wide range of digital trace data, enabling researchers to explore behavioral patterns and health insights effectively.</p>
+    </div>
+
+    <button class="accordion">Key Features</button>
+    <div class="panel">
+      <h4>1. Modular Architecture</h4>
+      <p><strong>Customizable Modules:</strong> The platform includes nine distinct data collection modules, each tailored to capture specific types of data. Researchers can choose which modules to activate based on their study requirements.</p>
+      <p><strong>Dynamic Configuration:</strong> Researchers can modify parameters such as sampling frequency and data transfer methods without extensive coding knowledge.</p>
+
+      <h4>2. Data Collection Capabilities</h4>
+      <p><strong>Screenshots:</strong> Captures screenshots at user-defined intervals, logging timestamps and saving images.</p>
+      <p><strong>App Usage:</strong> Monitors currently active apps and transitions.</p>
+      <p><strong>User Interactions:</strong> Logs actions like clicks, scrolls, and gestures.</p>
+      <p><strong>Location Tracking:</strong> Collects GPS coordinates at customizable intervals.</p>
+      <p><strong>Physical Activity Tracking:</strong> Records step counts at intervals.</p>
+      <p><strong>Battery Monitoring:</strong> Tracks levels and charging events.</p>
+      <p><strong>Network Connectivity:</strong> Monitors Wi-Fi/cellular connectivity.</p>
+      <p><strong>Device Specifications:</strong> Collects device info during account creation.</p>
+    </div>
+
+    <button class="accordion">Real-Time Monitoring</button>
+    <div class="panel">
+      <p><strong>Dashboard Application:</strong> Real-time participant data monitoring.</p>
+      <p><strong>Ticker Collection:</strong> Streamlined overview of activity with inactivity flags.</p>
+    </div>
+
+    <button class="accordion">Data Storage and Security</button>
+    <div class="panel">
+      <p><strong>HIPAA-Compliant Storage:</strong> Uses Firestore + GCS for secure storage.</p>
+      <p><strong>User Authentication:</strong> Firebase Authentication for secure access.</p>
+      <p><strong>Dynamic Parameter Updates:</strong> Real-time adjustments without recompilation.</p>
+    </div>
+
+    <button class="accordion">Open-Source Availability</button>
+    <div class="panel">
+      <p><strong>Community Contributions:</strong> Extension points for developers.</p>
+      <p><strong>Source Code Access:</strong> Source code publicly available for adaptation.</p>
+    </div>
+
+    <button class="accordion">User Empowerment</button>
+    <div class="panel">
+      <p><strong>Informed Consent:</strong> Participants are fully informed and can pause/resume data collection anytime.</p>
+      <p><strong>Privacy Controls:</strong> Manage permissions easily (e.g., location, screenshots).</p>
+    </div>
+
+    <button class="accordion">Data Analysis and Insights</button>
+    <div class="panel">
+      <p><strong>Granular Data Collection:</strong> Captures moment-to-moment interactions.</p>
+      <p><strong>Cross-Validation:</strong> Combines multiple data sources for robust conclusions.</p>
+    </div>
+
+    <button class="accordion">Performance Metrics</button>
+    <div class="panel">
+      <p><strong>Resource Efficiency:</strong> Low CPU/RAM impact during data collection.</p>
+      <p><strong>Battery Conservation:</strong> Strategies to minimize power drain.</p>
+    </div>
+
+    <button class="accordion">Conclusion</button>
+    <div class="panel">
+      <p>The Stanford Screenomics platform is a significant advancement in digital trace data collection, offering researchers a versatile tool with modular design, real-time monitoring, and strong privacy safeguards.</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Stanford Screenomics. All rights reserved.
+  </footer>
+
+  <!-- Accordion Script -->
+  <script>
+    const acc = document.getElementsByClassName("accordion");
+    for (let i = 0; i < acc.length; i++) {
+      acc[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        const panel = this.nextElementSibling;
+        panel.style.display = (panel.style.display === "block") ? "none" : "block";
+      });
+    }
+  </script>
+</body>
+</html>

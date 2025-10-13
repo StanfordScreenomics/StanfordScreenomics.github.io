@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Firestore Explorer + Mockup Screens</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0; padding: 20px;
+      background: #f9f9f9;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    h2 { margin-bottom: 20px; color: #333; }
+    .main-content {
+      display: flex; gap: 40px; align-items: flex-start;
+    }
+    h3 {
+      margin-bottom: 0;
+    }
+    h4 {
+      margin-top: 4px;
+      font-weight: normal;
+    }
+    .left-align-container {
+      max-width: 1000px;
+      margin-top: 20px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 20px;
+      font-family: Geneva, Verdana, Tahoma, sans-serif; /* Geneva with fallbacks */
+      font-size: 16px; /* adjust size as you like, e.g., 14px, 18px */
+    }
+    
+    .left-align-container p {
+      margin-bottom: 16px; /* space below paragraphs */
+    }
+    
+    .left-align-container ul {
+      margin-top: 0;
+      margin-bottom: 16px; /* space below the list */
+      padding-left: 20px;  /* indent for bullet points */
+      list-style-type: disc;
+    }
+    
+    .left-align-container ul li {
+      margin-bottom: 8px; /* spacing between bullet points */
+    }
+
+    
+    /* Explorer */
+    .explorer {
+      width: 1000px; /* wider to fit 4 columns */
+      height: 600px;
+      display: flex; gap: 16px; overflow: hidden;
+      border: 1px solid #ccc; background: #fff; border-radius: 6px;
+      font-size: 14px;
+      margin-bottom: 0px;
+    }
+    .column {
+      flex: 1 0 100px; border-right: 1px solid #ddd;
+      padding: 12px; overflow-y: auto;
+    }
+    .column:last-child { border-right: none; }
+    .column strong {
+      display: block; margin-bottom: 12px; font-size: 1em;
+      border-bottom: 1px solid #ccc; padding-bottom: 6px;
+      color: #222;
+    }
+    ul { list-style: none; padding: 0; margin: 0; }
+    li.item {
+      padding: 6px 10px; margin-bottom: 6px;
+      cursor: pointer; border-radius: 4px; color: #444;
+      user-select: none;
+    }
+    li.item:hover { background-color: #f0f0f0; }
+    li.item.selected {
+      background-color: #cfe8ff; font-weight: bold;
+    }
+    .field-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 6px;      /* same as li.item */
+      padding: 6px 10px;       /* add padding to get same highlight size */
+      border-radius: 4px;      /* same rounded corners */
+      cursor: pointer;         /* consistent with li.item */
+    }
+    .field-row:hover {
+      background-color: #f0f0f0;
+    }
+    .field-row.selected {
+      background-color: #cfe8ff;
+      font-weight: bold;
+    }
+    .field-row.selected,
+    .field-row.selected .field-label,
+    .field-row.selected .field-value {
+      font-weight: bold;
+    }
+    .field-label {
+      flex: 1; font-weight: normal; color: #555;
+    }
+    .field-value {
+      flex: 1; font-family: monospace; color: #222;
+      padding: 6px 10px; border-radius: 4px;
+      border: 1px solid transparent; cursor: pointer; user-select: text;
+    }
+    .field-value:hover { background-color: #f7faff; }
+    .field-input {
+      flex: 1; padding: 6px 10px; font-family: monospace;
+      font-size: 1em; border-radius: 4px; border: 1px solid #888;
+    }
+    .field-value.updated {
+      border-color: green; background-color: #e8ffe8;
+      transition: background-color 1s ease;
+    }
+    
+    /* Highlight newly logged events */
+    .new-event-highlight {
+      background-color: #d4f8d4 !important;  /* light green */
+      transition: background-color 1s ease;
+    }
+    .placeholder { color: #999; font-style: italic; }
+
+    /* Smartphone style */
+    .phone-mockup {
+      width: 300px; height: 600px;
+      border-radius: 20px; background: #fefefe;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      display: flex; flex-direction: column;
+      align-items: center; overflow: hidden; position: relative;
+    }
+    .phone-bezel-top { width:100%; height:30px;
+      background: #333; display:flex;
+      align-items:center; justify-content:center;
+      position: relative;
+    }
+    .camera { width:12px;height:12px; background:black;
+      border-radius:50%; margin-right:8px;
+    }
+    .speaker { width:40px;height:6px;
+      background:#222; border-radius:3px;
+    }
+    .phones-row {
+      display: flex;
+      gap: 30px;
+      margin: 0;
+      align-items: flex-start;
+    }
+    .phone-content {
+      flex:1; display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      gap:20px; padding:20px; text-align:center;
+      font-size:14px;
+    }
+    .phone-topbar {
+      width:100%; height:48px; background:#8c1515;
+      color:white; display:flex; align-items:center;
+      justify-content:center; font-weight:bold; font-size:14px;
+    }
+    .stanford-logo { width:90px; height:auto; }
+
+    .toggle-switch { position: relative; display:inline-block;
+      width:60px; height:32px;
+    }
+    .toggle-switch input { opacity:0; width:0; height:0; }
+    .slider {
+      position:absolute; cursor:pointer; top:0;left:0;
+      right:0;bottom:0; background:#ccc;
+      transition:0.4s; border-radius:32px;
+    }
+    .slider:before {
+      position:absolute; content:""; height:24px; width:24px;
+      left:4px; bottom:4px; background:white;
+      transition:0.4s; border-radius:50%;
+    }
+    .toggle-switch input:checked + .slider {
+      background:#2196F3;
+    }
+    .toggle-switch input:checked + .slider:before {
+      transform: translateX(28px);
+    }
+    .phone-navbar {
+      width:100%; height:40px; background:#222;
+      display:flex; align-items:center; justify-content:space-around;
+    }
+    .nav-button {
+      width:20px; height:20px; border-radius:50%; background:#555;
+    }
+    .hidden {
+      display: none !important;
+    }
+
+    /* Registration screen inputs */
+    .reg-input {
+      width: 180px; padding: 8px; font-size: 14px;
+      border-radius: 4px; border: 1px solid #888;
+      text-transform: uppercase; /* show uppercase visually */
+    }
+    .reg-button, .logout-button {
+      padding: 8px 16px; font-size:14px;
+      background:#2196F3; color:white; border:none;
+      border-radius:4px; cursor:pointer;
+      margin-top: 10px;
+    }
+    .logout-button {
+      background:#a00;
+    }
+    
+    .horizontal-layout {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      align-items: center;
+      justify-content: center;
+      margin-top: 10px;
+    }
+    
+    .user-entry {
+      margin-bottom: 12px;
+      padding: 4px;
+      border-bottom: 1px solid #ccc;
+    }
+    
+    .user-entry pre {
+      margin: 4px 0 0 10px;
+      font-family: monospace;
+      font-size: 12px;
+    }
+
+
+    #user-display-content {
+      max-height: 430px; /* slightly smaller than phone-content height */
+      overflow-y: auto;
+      padding-left: 12px;
+      text-align: left !important;
+      color: #000;
+      display: block !important;
+      box-sizing: border-box;
+      overflow-x: hidden;
+    }
+    #user-display-content ul {
+      padding-left: 12px;
+      margin-top: 10px;
+    }
+    #user-display-content ul li {
+      margin-bottom: 15px;     /* reduce spacing */
+      line-height: 1.2;       /* tighter line height */
+    }
+    .user-entry {
+      margin-bottom: 12px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 8px;
+    }
+.phone-mockup:nth-of-type(3) .phone-content {
+  display: block !important;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+  padding-left: 12px;
+  width: 100%;           /* Add this */
+  box-sizing: border-box; /* To include padding in width */
+}
+
+
+  </style>
+</head>
+<body>
+
+
+
+
+<h3>Screenomics Simulator</h3>
+<h4>Data Collection App, Dashboard, & Firestore Database Demo</h4>
+
+
+
+
+
+
+
+<div class="horizontal-layout">
+
+  <!-- Firestore Explorer on top -->
+  <div class="main-content">
+    <!-- Firestore Explorer -->
+    <div class="explorer">
+      <div class="column" id="collections-col">
+        <ul id="collections-list">
+          <li>Example Collection 1</li>
+          <li>Example Collection 2</li>
+        </ul>
+      </div>
+      <div class="column" id="documents-col">
+        <ul id="documents-list">
+          <li class="placeholder">(Select a collection)</li>
+        </ul>
+      </div>
+      <div class="column" id="fields-col">
+        <div id="fields-container"><p class="placeholder">(Select a document)</p></div>
+      </div>
+      <div class="column" id="subfields-col">
+        <div id="subfields-container"><p class="placeholder">(Select a subcollection)</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phones below -->
+  <div class="phones-row">
+    <!-- Phone 1: Registration screen -->
+    <div class="phone-mockup" id="reg-screen">
+      <div class="phone-bezel-top">
+        <div class="camera"></div><div class="speaker"></div>
+      </div>
+      <div class="phone-content" style="padding-top: 60px;">
+        <img src="https://identity.stanford.edu/wp-content/uploads/sites/3/2020/07/block-s-right.png"
+             alt="Stanford Logo" style="width:120px; height:auto;" />
+        <input type="text" id="codeInput" class="reg-input" placeholder="CODE" maxlength="10" />
+        <input type="text" id="numberInput" class="reg-input" placeholder="NUMBER" maxlength="10" />
+        <button id="loginBtn" class="reg-button">Log-In</button>
+        <button id="logoutBtn" class="logout-button" style="display:none;">Log-Out</button>
+      </div>
+      <div class="phone-navbar">
+        <div class="nav-button"></div><div class="nav-button"></div><div class="nav-button"></div>
+      </div>
+    </div>
+
+    <!-- Phone 2: Data collection status -->
+    <div class="phone-mockup">
+      <div class="phone-bezel-top">
+        <div class="camera"></div><div class="speaker"></div>
+      </div>
+      <div class="phone-topbar">Stanford Screenomics</div>
+      <div class="phone-content">
+        <img src="https://identity.stanford.edu/wp-content/uploads/sites/3/2020/07/block-s-right.png"
+             alt="Stanford Logo" class="stanford-logo" />
+        <p id="status-message">Data collection is on hold.</p>
+        <label class="toggle-switch">
+          <input type="checkbox" id="dataToggle" />
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="phone-navbar">
+        <div class="nav-button"></div><div class="nav-button"></div><div class="nav-button"></div>
+      </div>
+    </div>
+    
+    
+    <!-- Phone 3: User list -->
+    <div class="phone-mockup">
+      <div class="phone-bezel-top">
+        <div class="camera"></div><div class="speaker"></div>
+      </div>
+      <div class="phone-topbar">Screenomics Dashboard</div>
+      <div class="phone-content">
+        <div id="user-display-content"></div>
+      </div>
+      <div class="phone-navbar">
+        <div class="nav-button"></div><div class="nav-button"></div><div class="nav-button"></div>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="left-align-container">
+  <p><strong>READ THIS FIRST!</strong></p>
+
+  <p>This page presents a simplified sample version of the app and database, allowing you to test functionality before downloading the full project, setting up devices, configuring the database, and compiling the complete app for data collection.</p>
+
+  <ul>
+    <li>In this test version, you can use the login screen on the first (left) smartphone mockup to simulate user login with a study group code and participant number—credentials that would typically be provided by the research team.</li>
+    <li>Upon the first successful login, data collection begins automatically. While data collection is in progress, the second (middle) smartphone mockup displays the live app interface as it appears to participants. Users can pause data collection at any time using the toggle button.</li>
+    <li>On top of the smartphone mockups, you’ll see a mock Firestore database. In the <code>settings_profiles</code> collection, there are three pre-defined profiles (<code>INT</code>, <code>CON</code>, and <code>_default_</code>) that contain dynamic sampling parameters for testing. In a real deployment, researchers would configure these before distributing the app. By exploring these profiles, you can view how each group’s data sampling intervals are set. When a user logs in with a code matching <code>INT</code> or <code>CON</code>, they inherit that group’s settings. Otherwise, the default settings are used.</li>
+  <li>When a new user logs in for the first time, a new document is created under the <code>users</code> collection using the format <code>CODE_NUMBER</code>. Under each user document, there are two subcollections: <code>settings</code> and <code>events</code></li>
+  <li>In the <code>settings</code> subcollection, you’ll find the user-specific sampling configuration, initially inherited from the corresponding group profile. These settings can be edited independently and won’t affect the original group profile or other users in the same group. All time intervals are in milliseconds.</li>
+  <li>In the <code>events</code> subcollection, you'll see multimodal data being logged continuously based on the active sampling intervals, as long as the user is logged in and data collection is toggled on.</li>
+  <li>The third (right) smartphone mockup illustrates the dashboard app's interface that researchers use to monitor user activities and compliance. It lists all users, each preceded by a colored marker that reflects user activity status. Clicking a username expands details showing each unique event with its most recent timestamp. If a user’s most recent activity falls outside a predefined timeframe, the marker is red, indicating inactivity. Otherwise, it is green, indicating recent activity. For this test page, the timeframe is set to 10 seconds for convenience. In the real app, the default is 2 days but can be configured by researchers according to study protocols.</li>
+  </ul>
+
+  <p>Please note that this is a simplified simulation. The actual app and database include additional features and logic not shown here.</p>
+  <p>For more details, refer to documentation at
+    <a href="https://github.com/iansulin/Stanford_Screenomics" target="_blank" rel="noopener noreferrer">
+      https://github.com/iansulin/Stanford_Screenomics</a>.
+  </p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  // Mock Firestore data
+  const data = {
+    settings_profiles: ['INT', 'CON', '_default_'],
+    users: []  // Start empty - no initial user docs
+  };
+  const fields = {
+    _default_: {"foreground-app-check-interval":"1000","gps-location-interval":"600000","pa-stepcounts-interval":"1800000","screenshot-interval":"5000"},
+    INT: {"foreground-app-check-interval":"2000","gps-location-interval":"300000","pa-stepcounts-interval":"900000","screenshot-interval":"7000"},
+    CON: {"foreground-app-check-interval":"1500","gps-location-interval":"450000","pa-stepcounts-interval":"1200000","screenshot-interval":"6000"}
+  };
+
+  // Events storage inside data.usersEvents (keyed by userDoc)
+  const usersEvents = {};
+
+  const collectionsList = document.getElementById('collections-list');
+  const documentsList = document.getElementById('documents-list');
+  const fieldsContainer = document.getElementById('fields-container');
+  const subfieldsContainer = document.getElementById('subfields-container');
+  const codeInput = document.getElementById('codeInput');
+  const numberInput = document.getElementById('numberInput');
+  const loginBtn = document.getElementById('loginBtn');
+  const logoutBtn = document.getElementById('logoutBtn');
+  const dataToggle = document.getElementById('dataToggle');
+  const statusMessage = document.getElementById('status-message');
+
+  let activeCollection = null;
+  let activeUserDoc = null;   // currently selected user doc
+  let activeSubcollection = null;  // 'settings' or 'events' or null
+  let screenshotTimer = null;
+  let locationTimer = null;
+  let stepCountTimer = null;
+  let foregroundAppTimer = null;
+
+  // NEW global current profile key
+  let currentProfileKey = '_default_';
+
+  function initExplorer() {
+    collectionsList.innerHTML = '';
+    Object.keys(data).forEach(coll => {
+      const li = document.createElement('li');
+      li.textContent = coll;
+      li.classList.add('item');
+      li.onclick = () => selectCollection(coll, li);
+      collectionsList.appendChild(li);
+    });
+    documentsList.innerHTML = '';
+    fieldsContainer.innerHTML = '';
+    subfieldsContainer.innerHTML = '';
+  }
+
+  function selectCollection(coll, el) {
+    activeCollection = coll;
+    highlight(collectionsList, el);
+    documentsList.innerHTML = '';
+    fieldsContainer.innerHTML = '';
+  
+    const subfieldsCol = document.getElementById('subfields-col');
+    const subfieldsContainer = document.getElementById('subfields-container');
+  
+    // Reset subfields container and visibility
+    subfieldsContainer.innerHTML = '';
+    subfieldsCol.classList.remove('hidden');
+  
+    if (coll === 'settings_profiles') {
+      // Hide the 4th column
+      subfieldsCol.classList.add('hidden');
+      subfieldsContainer.innerHTML = ''; // Clear leftover events
+      activeSubcollection = null; // Reset selected subcollection
+
+  
+      // Render settings_profiles documents
+      data.settings_profiles.forEach(profileKey => {
+        const li = document.createElement('li');
+        li.textContent = profileKey;
+        li.classList.add('item');
+        li.onclick = () => {
+          renderFieldsFromProfile(profileKey); // working editable function
+        };
+        documentsList.appendChild(li);
+      });
+    } else if (coll === 'users') {
+      // Show all 4 columns
+      data.users.forEach(doc => {
+        const li = document.createElement('li');
+        li.textContent = doc;
+        li.classList.add('item');
+        li.onclick = () => selectDocument(doc, li); // Select user document
+        documentsList.appendChild(li);
+      });
+    }
+  }
+
+  
+  function selectDocument(doc, el) {
+    highlight(documentsList, el);
+    activeSubcollection = null;
+    activeUserDoc = doc; // Set the active user document
+
+    // Render the user's settings and events options
+    renderUserSubcollections(doc);
+  }
+
+  function renderUserSubcollections(userDoc) {
+    fieldsContainer.innerHTML = '';       // Clear 3rd column
+    subfieldsContainer.innerHTML = '';    // Clear 4th column
+    activeSubcollection = null;           // Ensure nothing is pre-selected
+  
+    ['settings', 'events'].forEach(sub => {
+      const row = document.createElement('div');
+      row.className = 'field-row';
+      row.style.cursor = 'pointer';
+  
+      const label = document.createElement('div');
+      label.className = 'field-label';
+      label.textContent = sub;
+  
+      row.appendChild(label);
+  
+      row.onclick = () => {
+        // Clear selection from all rows
+        [...fieldsContainer.children].forEach(r => r.classList.remove('selected'));
+        row.classList.add('selected');
+  
+        activeSubcollection = sub;
+        subfieldsContainer.innerHTML = ''; // Always reset 4th column on new selection
+  
+        if (sub === 'settings') {
+          renderFieldsFromUser(userDoc);
+        } else if (sub === 'events') {
+          renderUserEvents(userDoc);
+        }
+      };
+  
+      fieldsContainer.appendChild(row);
+    });
+  }
+
+  function renderFieldsFromProfile(profileKey, isSubfield = false) {
+    const container = isSubfield ? subfieldsContainer : fieldsContainer;
+    container.innerHTML = '';
+    const obj = fields[profileKey];
+    if (!obj) {
+      container.innerHTML = `<p class="placeholder">No fields for profile "${profileKey}".</p>`;
+      return;
+    }
+    Object.entries(obj).forEach(([k, v]) => {
+      const row = document.createElement('div');
+      row.className = 'field-row';
+      const label = document.createElement('div');
+      label.className = 'field-label';
+      label.textContent = k;
+      const val = document.createElement('span');
+      val.className = 'field-value';
+      val.textContent = v;
+      val.onclick = () => {
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.value = obj[k];
+        input.className = 'field-input';
+        input.onblur = () => commit(input, row, val, profileKey, k);
+        input.onkeydown = e => {
+          if (e.key === 'Enter') input.blur();
+        };
+        row.replaceChild(input, val);
+        input.focus();
+      };
+      row.appendChild(label);
+      row.appendChild(val);
+      container.appendChild(row);
+    });
+  }
+
+  function renderProfileSettings(profileKey) {
+    const container = fieldsContainer; // Ensure this is the correct container
+    container.innerHTML = ''; // Clear previous settings
+
+    const settings = fields[profileKey]; // Access profile settings
+
+    if (!settings) {
+        container.innerHTML = `<p class="placeholder">No settings for profile "${profileKey}".</p>`;
+        return;
+    }
+
+    Object.entries(settings).forEach(([key, value]) => {
+        const row = document.createElement('div');
+        row.className = 'field-row';
+
+        const label = document.createElement('div');
+        label.className = 'field-label';
+        label.textContent = key;
+
+        const val = document.createElement('span');
+        val.className = 'field-value';
+        val.textContent = value;
+
+        // Debug log to check if click event is set
+        val.onclick = () => {
+            console.log(`Editing ${key} with value ${value}`); // Debug log
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = value; // Set the current value
+            input.className = 'field-input';
+
+            input.onblur = () => {
+                const newValue = input.value.trim();
+                if (newValue !== value) { // Only update if the value changed
+                    settings[key] = newValue; // Update the settings object
+                    val.textContent = newValue; // Update displayed value
+                }
+                row.replaceChild(val, input); // Replace input with updated value
+            };
+
+            input.onkeydown = e => {
+                if (e.key === 'Enter') input.blur(); // Commit on Enter key
+            };
+
+            row.replaceChild(val, input); // Replace value with input
+            input.focus(); // Focus on input field
+        };
+
+        row.appendChild(label);
+        row.appendChild(val);
+        container.appendChild(row); // Append settings to the fieldsContainer
+    });
+  }
+
+  function renderFieldsFromUser(userDoc) {
+    const container = subfieldsContainer; // This should be the correct container for settings (fourth column)
+    container.innerHTML = ''; // Clear previous settings
+
+    const obj = fields[userDoc]; // Access user settings
+
+    if (!obj) {
+        container.innerHTML = `<p class="placeholder">No editable fields for "${userDoc}".</p>`;
+        return;
+    }
+
+    Object.entries(obj).forEach(([k, v]) => {
+        const row = document.createElement('div');
+        row.className = 'field-row';
+        const label = document.createElement('div');
+        label.className = 'field-label'; 
+        label.textContent = k;
+        const val = document.createElement('span');
+        val.className = 'field-value'; 
+        val.textContent = v;
+
+        // Input handling
+        val.onclick = () => {
+            const input = document.createElement('input');
+            input.type='text'; 
+            input.value = obj[k]; 
+            input.className='field-input';
+            input.onblur = () => commit(input, row, val, userDoc, k);
+            input.onkeydown = e => { if(e.key==='Enter') input.blur(); };
+            row.replaceChild(input, val);
+            input.focus();
+        };
+
+        row.appendChild(label); 
+        row.appendChild(val);
+        container.appendChild(row); // Append settings to the subfieldsContainer
+    });
+  }
+  
+  function renderUserEvents(userDoc) {
+    const container = subfieldsContainer;
+    
+    // Check if the correct subcollection is selected
+    if (activeSubcollection !== 'events') {
+      container.innerHTML = '';
+      return;
+    }
+  
+    container.innerHTML = '';
+  
+    if (!usersEvents[userDoc]) usersEvents[userDoc] = [];
+    const events = usersEvents[userDoc];
+  
+    if (events.length === 0) {
+      container.innerHTML = `<p class="placeholder">(No events yet)</p>`;
+      return;
+    }
+  
+    const ul = document.createElement('ul');
+  
+    events.forEach(evt => {
+      const li = document.createElement('li');
+      li.className = 'item';
+      const [eventType, timestamp] = evt.split(' | ');
+      li.innerHTML = `
+        <div>${eventType}</div>
+        <div style="font-size: 12px; color: #555; padding-left: 12px;">${timestamp}</div>`;
+      ul.appendChild(li);
+    });
+  
+    container.appendChild(ul);
+  }
+
+
+  function renderFields(docKey) {
+    fieldsContainer.innerHTML = '';
+    const obj = fields[docKey];
+    if (!obj) {
+      fieldsContainer.innerHTML = `<p class="placeholder">No editable fields for "${docKey}".</p>`;
+      return;
+    }
+    Object.entries(obj).forEach(([k, v]) => {
+      const row = document.createElement('div');
+      row.className = 'field-row';
+      const label = document.createElement('div');
+      label.className = 'field-label'; label.textContent = k;
+      const val = document.createElement('span');
+      val.className = 'field-value'; val.textContent = v;
+      val.onclick = () => {
+        const input = document.createElement('input');
+        input.type='text'; input.value = obj[k]; input.className='field-input';
+        input.onblur = () => commit(input, row, val, docKey, k);
+        input.onkeydown = e => { if(e.key==='Enter') input.blur(); };
+        row.replaceChild(input, val);
+        input.focus();
+      };
+      row.appendChild(label); row.appendChild(val);
+      fieldsContainer.appendChild(row);
+    });
+  }
+
+  // Updated commit to restart timers on setting change
+  function commit(input, row, span, docKey, key) {
+    const newVal = input.value.trim();
+
+    // Update the user's settings only
+    if (fields[docKey]) {
+        fields[docKey][key] = newVal; // Update user's settings
+    }
+
+    // Update the displayed value
+    span.textContent = newVal;
+    row.replaceChild(span, input);
+    
+    // Indicate that the field has been updated
+    span.classList.add('updated');
+    setTimeout(() => span.classList.remove('updated'), 1000);
+    console.log(`Updated ${docKey}.${key} = ${newVal}`);
+
+    // Restart timers to reflect new intervals from user settings
+    stopAllEventTimers();
+    startAllEventTimers();
+  }
+
+  function highlight(listEl, sel) {
+    Array.from(listEl.children).forEach(li => li.classList.remove('selected'));
+    if(sel) sel.classList.add('selected');
+  }
+
+  function clearFields() {
+    documentsList.innerHTML = '';
+    fieldsContainer.innerHTML = '';
+    subfieldsContainer.innerHTML = '';
+    activeUserDoc = null;
+    activeSubcollection = null;
+  }
+
+  // Helper to get ISO-like date+time string without separators for logs
+  function getTimestamp() {
+    const d = new Date();
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth()+1).padStart(2,'0');
+    const dd = String(d.getDate()).padStart(2,'0');
+    const hh = String(d.getHours()).padStart(2,'0');
+    const min = String(d.getMinutes()).padStart(2,'0');
+    const ss = String(d.getSeconds()).padStart(2,'0');
+    const ms = String(d.getMilliseconds()).padStart(3, '0');
+    return `${yyyy}/${mm}/${dd} ${hh}:${min}:${ss}.${ms}`;
+  }
+
+  // Logging an event for current user
+  function logEvent(eventType) {
+    if (!activeUserDoc) return;
+    if (!usersEvents[activeUserDoc]) usersEvents[activeUserDoc] = [];
+    const timestamp = getTimestamp();
+    usersEvents[activeUserDoc].push(`${eventType} | ${timestamp}`);
+    // If 'events' subcollection is open for this user, update view
+    if (activeUserDoc && activeSubcollection === 'events') {
+      renderUserEvents(activeUserDoc);
+
+      // Highlight the most recent event briefly
+      const container = document.getElementById('subfields-container');
+      const lastLog = container.querySelector('ul li:last-child');
+      if (lastLog) {
+        lastLog.classList.add('new-event-highlight');
+        setTimeout(() => {
+          lastLog.classList.remove('new-event-highlight');
+        }, 500); // 0.5 seconds
+      }
+
+    }
+    console.log(`Event logged for ${activeUserDoc}: ${timestamp} - ${eventType}`);
+  }
+
+  // Timer start/stop functions using currentProfileKey
+  function startForegroundAppEvents() {
+      const interval = parseInt(fields[activeUserDoc]['foreground-app-check-interval'], 10);
+      if (foregroundAppTimer) clearInterval(foregroundAppTimer);
+      foregroundAppTimer = setInterval(() => {
+          logEvent('NewForegroundAppEvent');
+      }, interval);
+  }
+  
+  function startScreenshotEvents() {
+      const interval = parseInt(fields[activeUserDoc]['screenshot-interval'], 10);
+      if (screenshotTimer) clearInterval(screenshotTimer);
+      screenshotTimer = setInterval(() => {
+          logEvent('ScreenshotEvent');
+      }, interval);
+  }
+  
+  function startLocationEvents() {
+      const interval = parseInt(fields[activeUserDoc]['gps-location-interval'], 10);
+      if (locationTimer) clearInterval(locationTimer);
+      locationTimer = setInterval(() => {
+          logEvent('LocationEvent');
+      }, interval);
+  }
+  
+  function startStepCountEvents() {
+      const interval = parseInt(fields[activeUserDoc]['pa-stepcounts-interval'], 10);
+      if (stepCountTimer) clearInterval(stepCountTimer);
+      stepCountTimer = setInterval(() => {
+          logEvent('StepCountEvent');
+      }, interval);
+  }
+
+  function stopAllEventTimers() {
+    if (foregroundAppTimer) clearInterval(foregroundAppTimer);
+    if (screenshotTimer) clearInterval(screenshotTimer);
+    if (locationTimer) clearInterval(locationTimer);
+    if (stepCountTimer) clearInterval(stepCountTimer);
+  }
+
+  function startAllEventTimers() {
+    startForegroundAppEvents();
+    startScreenshotEvents();
+    startLocationEvents();
+    startStepCountEvents();
+  }
+  
+  
+
+  function renderUsers() {
+    const container = document.getElementById("user-display-content");
+    container.innerHTML = "";
+  
+    const users = firestore.users;
+    if (!users || Object.keys(users).length === 0) {
+      container.innerHTML = "<p>No users found.</p>";
+      return;
+    }
+  
+    Object.keys(users).forEach(userId => {
+      const userData = users[userId];
+  
+      // Create container block for each user with flex layout for square + username
+      const block = document.createElement("div");
+      block.className = "user-entry";
+      block.style.display = "flex";
+      block.style.alignItems = "center";
+      block.style.gap = "8px";
+  
+      // Colored square for event recency status
+      const statusSquare = document.createElement("div");
+      statusSquare.className = "status-square";
+      statusSquare.dataset.userid = userId;
+      statusSquare.style.width = "12px";
+      statusSquare.style.height = "12px";
+      statusSquare.style.borderRadius = "2px";
+      statusSquare.style.flexShrink = "0";
+      statusSquare.style.backgroundColor = "gray"; // default color before update
+  
+      // Username clickable header
+      const header = document.createElement("strong");
+      header.textContent = userId;
+      header.style.cursor = "pointer";
+      header.style.display = "block";
+      header.style.marginBottom = "6px";
+      header.style.flexGrow = "1";
+  
+      // Container for details (hidden by default)
+      const details = document.createElement("div");
+      details.style.display = "none";
+      details.style.paddingLeft = "12px";
+      details.style.fontFamily = "monospace";
+      details.style.fontSize = "13px";
+      details.style.color = "#333";
+      details.style.overflowX = "hidden";
+      details.style.whiteSpace = "normal";
+      details.style.wordBreak = "break-word";
+      details.style.width = "100%";
+  
+      // Toggle details view on username click
+      header.onclick = () => {
+        if (details.style.display === "none") {
+          details.style.display = "block";
+          details.innerHTML = "";
+  
+          const events = usersEvents[userId] || [];
+  
+          if (events.length === 0) {
+            details.innerHTML = "<em>(No events yet)</em>";
+          } else {
+            const latestEvents = {};
+            events.forEach(evt => {
+              const [eventType, timestamp] = evt.split(" | ");
+              if (
+                !latestEvents[eventType] ||
+                new Date(timestamp) > new Date(latestEvents[eventType])
+              ) {
+                latestEvents[eventType] = timestamp;
+              }
+            });
+  
+            const ul = document.createElement("ul");
+            ul.style.paddingLeft = "16px";
+            ul.style.margin = "0";
+            ul.style.overflowX = "hidden";
+            ul.style.whiteSpace = "normal";
+            ul.style.wordBreak = "break-word";
+            ul.style.maxWidth = "100%";
+            
+            const li = document.createElement("li");
+            li.style.maxWidth = "100%";
+            li.style.overflowX = "hidden";
+            li.style.whiteSpace = "normal";
+            li.style.wordBreak = "break-word";
+            
+            Object.entries(latestEvents).forEach(([eventType, timestamp]) => {
+              const li = document.createElement("li");
+              li.innerHTML = `
+                <div>${eventType}</div>
+                <div style="font-size: 11px; color: #555; padding-left: 8px;">${timestamp}</div>
+              `;
+              ul.appendChild(li);
+            });
+  
+            details.appendChild(ul);
+            const divider = document.createElement("div");
+            divider.style.height = "1px";
+            divider.style.backgroundColor = "#ccc";
+            divider.style.marginTop = "8px";
+          }
+        } else {
+          details.style.display = "none";
+        }
+      };
+  
+      block.appendChild(statusSquare);
+      block.appendChild(header);
+  
+      container.appendChild(block);
+      container.appendChild(details);
+    });
+  }
+
+  function updateStatusSquares() {
+    const now = new Date();
+    const squares = document.querySelectorAll(".status-square");
+  
+    squares.forEach(square => {
+      const userId = square.dataset.userid;
+      const events = usersEvents[userId] || [];
+  
+      if (events.length === 0) {
+        square.style.backgroundColor = "red";
+        return;
+      }
+  
+      let latestTimestamp = null;
+      events.forEach(evt => {
+        const [, timestamp] = evt.split(" | ");
+        if (!latestTimestamp || new Date(timestamp) > new Date(latestTimestamp)) {
+          latestTimestamp = timestamp;
+        }
+      });
+  
+      const latestDate = new Date(latestTimestamp);
+      const diffSeconds = (now - latestDate) / 1000;
+      square.style.backgroundColor = diffSeconds <= 10 ? "green" : "red";
+    });
+  }
+
+  
+  function handleUserLogin(code, number) {
+    const userKey = `${code}_${number}`;
+    const newUser = {
+      name: "Participant " + number,
+      lastLogin: new Date().toISOString()
+    };
+  
+    if (!data.users.includes(userKey)) {
+      data.users.push(userKey);
+    }
+    if (!firestore.users[userKey]) {
+      firestore.users[userKey] = newUser;
+    }
+  
+    renderUsers();
+  }
+
+
+  
+
+  // Log out function: clear user state, stop timers
+  function logout() {
+    activeUserDoc = null;
+    currentProfileKey = '_default_';
+    dataToggle.checked = false;
+    statusMessage.textContent = 'Data collection is on hold.';
+    stopAllEventTimers();
+    clearFields();
+    loginBtn.style.display = 'inline-block';
+    logoutBtn.style.display = 'none';
+    codeInput.disabled = false;
+    numberInput.disabled = false;
+  
+    // Remove all .selected classes from collections and documents
+    document.querySelectorAll('#collections-list .selected').forEach(el => el.classList.remove('selected'));
+    document.querySelectorAll('#documents-list .selected').forEach(el => el.classList.remove('selected'));
+  
+    // Also remove .selected from fields and subfields rows if any
+    document.querySelectorAll('#fields-container .selected').forEach(el => el.classList.remove('selected'));
+    document.querySelectorAll('#subfields-container .selected').forEach(el => el.classList.remove('selected'));
+  }
+
+  const firestore = {
+    users: {},
+    settings_profiles: {},
+    // Add other collections if needed
+  };
+
+  // Login logic
+  function login(code, number) {
+    if (!code || !number) {
+        alert('Please enter CODE and NUMBER');
+        return;
+    }
+    const userDoc = `${code.toUpperCase()}_${number.toUpperCase()}`;
+
+    // Add user if doesn't exist
+    if (!data.users.includes(userDoc)) {
+        data.users.push(userDoc);
+    }
+    // Add user to firestore.users if missing (for phone 3 display)
+    if (!firestore.users[userDoc]) {
+      firestore.users[userDoc] = {
+        name: `Participant ${number}`,
+        lastLogin: new Date().toISOString()
+      };
+    }
+    activeUserDoc = userDoc;
+
+    // Determine profile key from code prefix
+    const codePrefix = code.toUpperCase();
+    if (codePrefix === 'INT') currentProfileKey = 'INT';
+    else if (codePrefix === 'CON') currentProfileKey = 'CON';
+    else currentProfileKey = '_default_';
+
+    // Initialize user settings if they don't exist
+    if (!fields[userDoc]) {
+        // Create a deep copy of the profile settings to ensure independence
+        const profileSettings = JSON.parse(JSON.stringify(fields[currentProfileKey]));
+        fields[userDoc] = profileSettings; // Create user settings entry
+    }
+
+    // Select users collection and user document
+    selectCollection('users', [...collectionsList.children].find(li => li.textContent === 'users'));
+    
+    const userLi = [...documentsList.children].find(li => li.textContent === userDoc);
+    if (userLi) selectDocument(userDoc, userLi);
+
+    loginBtn.style.display = 'none';
+    logoutBtn.style.display = 'inline-block';
+    codeInput.disabled = true;
+    numberInput.disabled = true;
+
+    dataToggle.checked = true;
+    statusMessage.textContent = 'Data collection is in progress.';
+    startAllEventTimers();
+    
+    renderUsers();
+  }
+
+  // On toggle data collection switch change
+  dataToggle.addEventListener('change', () => {
+    if (dataToggle.checked) {
+      statusMessage.textContent = 'Data collection is in progress.';
+      startAllEventTimers();
+    } else {
+      statusMessage.textContent = 'Data collection is on hold.';
+      stopAllEventTimers();
+    }
+  });
+
+  loginBtn.onclick = () => {
+    login(codeInput.value.trim(), numberInput.value.trim());
+  };
+
+  logoutBtn.onclick = () => {
+    logout();
+  };
+
+  initExplorer();
+  renderUsers();
+  updateStatusSquares();
+  setInterval(updateStatusSquares, 1000);
+
+
+  
+  function updateUserListFromFirestore() {
+    const userList = document.getElementById("user-list");
+    userList.innerHTML = "";
+  
+    const users = firestore["users"];
+    if (users && Object.keys(users).length > 0) {
+      Object.keys(users).forEach(userId => {
+        const li = document.createElement("li");
+        li.textContent = userId;
+        userList.appendChild(li);
+      });
+    } else {
+      const li = document.createElement("li");
+      li.textContent = "No users found.";
+      userList.appendChild(li);
+    }
+  }
+
+  function addUser(userId, userData) {
+    firestore.users[userId] = userData;
+    updateUserListFromFirestore(); // <-- This updates the user list in the UI
+  }
+
+
+
+  // Enforce CODE input to allow only letters and convert to uppercase
+  codeInput.addEventListener('input', (e) => {
+    const cleaned = e.target.value.replace(/[^a-zA-Z]/g, '').toUpperCase();
+    if (e.target.value !== cleaned) {
+      e.target.value = cleaned;
+    }
+  });
+  
+  // Enforce NUMBER input to allow only digits
+  numberInput.addEventListener('input', (e) => {
+    const cleaned = e.target.value.replace(/[^0-9]/g, '');
+    if (e.target.value !== cleaned) {
+      e.target.value = cleaned;
+    }
+  });
+
+</script>
+
+
+
+
+
+
+
+
+</body>
+</html>
