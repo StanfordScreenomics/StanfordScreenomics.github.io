@@ -209,31 +209,59 @@
     </nav>
   </header>
 
+
   <!-- Publications Section -->
   <section class="publications">
     <h2>Publications</h2>
+    <div id="publication-list"></div>
+  </section>
 
-    <div class="publication-item">
-        Kim, I., Boffa, J., Cho, M., Conroy, D. E., Kline, N., Haber, N., Robinson, T. N., Reeves, B., & Ram, N. (2025). 
-        <strong>Stanford Screenomics: An Open-source Platform for Unobtrusive Multimodal Digital Trace Data Collection from Android Smartphones.</strong> Preprint MedRxiv.
-        <a href="https://doi.org/10.1101/2025.06.24.25329707" target="_blank">DOI</a>
-    </div>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script>
+    const csvFile = 'screenomics_publications_since_2019.csv';
 
-    <div class="publication-item">
-        Kim, I., Robinson, T., Reeves, B., Haber, N., & Ram, N. (2025). 
-        <strong>Multimodal Data Fusion for Real-Time Mobile Digital Phenotyping: The Stanford Screenomics Solution.</strong> 
-        Presented at the SAA 2025 Annual Meeting. 
-        <a href="https://www.saa2025.com/Program" target="_blank">Link</a>
-    </div>
+    async function loadPublications() {
+      const response = await fetch(csvFile);
+      const csvText = await response.text();
 
-    <div class="publication-item">
-        Kim, I., Boffa, J., Cho, M., Conroy, D. E., Kline, N., Haber, N., Robinson, T. N., Reeves, B., & Ram, N. (2024). 
-        <strong>Stanford Screenomics: An open-source platform for unobtrusive multimodal digital trace data collection from Android smartphones.</strong> 
-        Presented at the APHA 2024 Annual Meeting. 
-        <a href="https://apha.confex.com/apha/2024/meetingapp.cgi/Paper/561893" target="_blank">Link</a>
-    </div>
+      const result = Papa.parse(csvText, { header: true, skipEmptyLines: true });
 
-    </section>
+      const publicationList = document.getElementById('publication-list');
+
+      result.data.forEach(row => {
+        let apa = (row.apa_citation || '').trim();
+        let doiLink = (row.publisher_url || '').trim();
+
+        // Extract DOI from APA if present
+        const doiRegex = /(https?:\/\/doi\.org\/\S+)/i;
+        const doiMatch = apa.match(doiRegex);
+        if (doiMatch) {
+          doiLink = doiMatch[1];
+          apa = apa.replace(doiLink, '').trim();
+        }
+
+        // Split after year
+        let yearIndex = apa.indexOf(').');
+        if (yearIndex === -1) yearIndex = 0;
+        let beforeTitle = apa.slice(0, yearIndex + 2);
+        let afterYear = apa.slice(yearIndex + 2).trim();
+
+        let firstPeriodIndex = afterYear.indexOf('.');
+        let title = firstPeriodIndex !== -1 ? afterYear.slice(0, firstPeriodIndex).trim() : afterYear;
+        let rest = firstPeriodIndex !== -1 ? afterYear.slice(firstPeriodIndex + 1).trim() : '';
+
+        const div = document.createElement('div');
+        div.className = 'publication-item';
+        div.innerHTML = `
+          ${beforeTitle} <strong>${title}</strong>. ${rest}${doiLink ? ` <a href="${doiLink}" target="_blank">DOI</a>` : ''}
+        `;
+
+        publicationList.appendChild(div);
+      });
+    }
+
+    loadPublications();
+  </script>
 
 
   <!-- Footer -->
