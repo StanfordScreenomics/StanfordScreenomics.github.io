@@ -165,6 +165,35 @@
       font-size: 0.9rem;
     }
 
+    /* Floating top-right buttons */
+    .top-right-buttons {
+      position: fixed;
+      top: 120px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+      z-index: 1000; /* ensures it’s above other content */
+    }
+
+    .floating-btn {
+      background-color: #53565A;
+      color: white;
+      padding: 0.5rem 1rem;
+      text-decoration: none;
+      border-radius: 9999px;
+      font-weight: bold;
+      font-size: 0.9rem;
+      text-align: center;
+      transition: background-color 0.2s ease;
+      opacity: 0.7;
+    }
+
+    .floating-btn:hover {
+      background-color: #53565A;
+      opacity: 1; /* fully opaque on hover */
+    }
+
     /* Responsive */
     @media (max-width: 768px) {
       .hero h1 { font-size: 2rem; }
@@ -258,9 +287,10 @@
       </div>
 
       <div class="team-member">
-        <img src="assets/unknown.jpg" alt="A Garron Torres">
-        <h3>A Garron Torres, BS</h3>
-        <p>Project Manager</p>
+        <img src="assets/mc.jpg" alt="Merve Cerit">
+        <h3>Merve Cerit, MS</h3>
+        <p>PhD Student</p>
+        <p>Graduate School of Education</p>
       </div>
 
       <div class="team-member">
@@ -279,7 +309,8 @@
       <div class="team-member">
         <img src="assets/yc.jpg" alt="Yikun Chi">
         <h3>Yikun Chi, MS</h3>
-        <p>PhD Student in Communication</p>
+        <p>PhD Student</p> 
+        <p>Department of Communication</p>
       </div>
     </div>
   </section>
@@ -288,6 +319,25 @@
   <footer>
     &copy; 2024 Stanford Screenomics. All rights reserved.
   </footer>
+
+  <!-- Floating buttons -->
+  <div class="top-right-buttons">
+  <a href="https://thechangelab.stanford.edu/" target="_blank" class="floating-btn">
+    The Change Lab
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M10 2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0V3.707L5.854 10.354a.5.5 0 1 1-.708-.708L12.293 3H10.5a.5.5 0 0 1-.5-.5z"/>
+      <path fill-rule="evenodd" d="M13 13H3V3h5a.5.5 0 0 1 0 1H4v9h9v-4a.5.5 0 0 1 1 0v5a.5.5 0 0 1-.5.5z"/>
+    </svg>
+  </a>
+
+  <a href="https://screenomics.stanford.edu/" target="_blank" class="floating-btn">
+    Human Screenome Project
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M10 2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0V3.707L5.854 10.354a.5.5 0 1 1-.708-.708L12.293 3H10.5a.5.5 0 0 1-.5-.5z"/>
+      <path fill-rule="evenodd" d="M13 13H3V3h5a.5.5 0 0 1 0 1H4v9h9v-4a.5.5 0 0 1 1 0v5a.5.5 0 0 1-.5.5z"/>
+    </svg>
+  </a>
+</div>
 
 </body>
 </html>
